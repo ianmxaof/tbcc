@@ -1,0 +1,10 @@
+{
+  "id": "example-hello",
+  "name": "Example Hello",
+  "version": "1.0.0",
+  "matches": ["http://*/*", "https://*/*"],
+  "runAt": "document_idle",
+  "world": "ISOLATED",
+  "gmShim": false,
+  "main": "main.js"
+}

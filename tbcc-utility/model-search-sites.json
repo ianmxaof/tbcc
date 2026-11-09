@@ -1,0 +1,30 @@
+{
+  "version": 5,
+  "sites": [
+    {
+      "id": "coomer",
+      "name": "Coomer",
+      "category": "onlyfans",
+      "url": "https://coomer.st/artists?q={username}&service=&sort_by=favorited&order="
+    },
+    {
+      "id": "bestcam",
+      "name": "BestCam",
+      "category": "livecams",
+      "url": "https://bestcam.tv/search/{username}"
+    },
+    {
+      "id": "camwhores_videos",
+      "name": "CamWhores Videos",
+      "category": "videos",
+      "url": "https://www.camwhores.tv/search/{username}/"
+    },
+    {
+      "id": "leakedzone",
+      "name": "Leakedzone",
+      "category": "macro",
+      "url": "https://leakedzone.com/{username}"
+    }
+  ],
+  "note": "Bare-metal: one site per category (utility macrosearch)."
+}

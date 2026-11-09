@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "defaults": {
+    "watch": { "fingerprint": "log", "blockThirdParty": false, "activeCounter": false },
+    "resist": { "fingerprint": "block", "blockThirdParty": true, "activeCounter": true },
+    "lockdown": { "fingerprint": "block", "blockThirdParty": true, "activeCounter": true, "nukeOnClose": true }
+  },
+  "fingerprinterDomains": [
+    "fingerprintjs.com",
+    "fpjs.io",
+    "clientgear.com",
+    "riskified.com",
+    "device-api.com",
+    "cdn.jsdelivr.net/npm/@fingerprintjs",
+    "iovation.com",
+    "maxmind.com",
+    "seon.io",
+    "sift.com",
+    "castle.io",
+    "datadome.co",
+    "perimeterx.net",
+    "px-cloud.net",
+    "distilnetworks.com",
+    "arkoselabs.com"
+  ],
+  "trackerBlocklist": [
+    "googletagmanager.com",
+    "google-analytics.com",
+    "facebook.net",
+    "doubleclick.net",
+    "googlesyndication.com",
+    "bat.bing.com",
+    "connect.facebook.net",
+    "hotjar.com",
+    "mouseflow.com",
+    "fullstory.com",
+    "segment.io",
+    "mixpanel.com",
+    "amplitude.com",
+    "criteo.com",
+    "outbrain.com",
+    "taboola.com",
+    "adroll.com",
+    "quantserve.com",
+    "scorecardresearch.com"
+  ],
+  "trackingParams": [
+    "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "utm_id", "utm_name",
+    "fbclid", "gclid", "gclsrc", "dclid", "msclkid", "mc_cid", "mc_eid",
+    "igshid", "ref_src", "ref_url", "_hsenc", "_hsmi", "si", "spm",
+    "ttclid", "twclid", "yclid", "s_cid", "vero_id", "mkt_tok"
+  ],
+  "hosts": {
+    "darkforums.as": { "tier": "resist", "notes": "legacy forum — sid in URL common" },
+    "leakzone.org": { "tier": "resist", "notes": "crack/leak forum" },
+    "breachforums.st": { "tier": "resist", "notes": "forum clone pattern" }
+  }
+}

@@ -1,0 +1,10 @@
+TBCC Utility 1.42.0
+
+Sideload (Chrome / Edge):
+1. Unzip this archive
+2. Open chrome://extensions (or edge://extensions)
+3. Enable Developer mode
+4. Load unpacked → select the tbcc-utility/ folder
+5. Open Options → Upload userscripts if you need page scripts
+
+Bare-metal build: empty page slot, gallery + macrosearch utility only.

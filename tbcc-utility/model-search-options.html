@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TBCC Utility — Options</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+</head>
+<body class="tbcc-options-page">
+    <nav class="top">
+    <a href="#capture-settings">Capture</a><span class="sep">·</span>
+    <a href="#x-profile-looms">X overlay</a><span class="sep">·</span>
+    <a href="#plugins">Plugins</a><span class="sep">·</span>
+    <a href="#local-stack">API</a><span class="sep">·</span>
+    <a href="#model">Macro search</a><span class="sep">·</span>
+    <a href="#master-archive">Archive</a><span class="sep">·</span>
+    <a href="#reverse">Reverse image</a>
+  </nav>
+
+  <section id="capture-settings" class="card">
+    <h1>Capture (side panel gallery)</h1>
+    <label class="row2">Theme preset
+      <select id="tbccThemePreset">
+        <option value="dark">Dark</option>
+        <option value="chatgpt">ChatGPT</option>
+        <option value="github">GitHub</option>
+        <option value="obsidian">Obsidian</option>
+        <option value="cursor">Cursor</option>
+      </select>
+    </label>
+    <p class="sub" style="margin:0 0 12px">These apply when you refresh or scan a tab in the gallery. Same settings as the old gallery settings modal.</p>
+    <fieldset id="image-conversion" style="margin:0 0 14px;border:1px solid var(--tbcc-border,#45475a);border-radius:8px;padding:12px">
+      <legend style="font-size:13px;padding:0 6px">Image conversion</legend>
+      <p class="sub" style="margin:0 0 8px;font-size:12px">
+        Re-encode raster images in the browser before download, ZIP, import, and Saved Messages (no ImageMagick on your PC).
+        Magic-byte sniff fixes fake <code>.jpg</code> files that are actually WebP.
+      </p>
+      <label class="row2">Export format
+        <select id="captureSettingFormat" title="Gallery download / ZIP / import raster export format">
+          <option value="original">Original — keep source bytes</option>
+          <option value="jpeg">Convert to JPEG (.jpg)</option>
+          <option value="png">Convert to PNG (.png)</option>
+          <option value="webp">Convert to WebP (.webp)</option>
+        </select>
+      </label>
+    </fieldset>
+    <label class="row2"><input type="checkbox" id="captureSettingAutoRefresh" /> Auto-scan when the side panel opens or becomes visible</label>
+    <label class="row2"><input type="checkbox" id="captureSettingClearSelectionOnOpen" /> Clear selected gallery items when the side panel opens</label>
+    <label class="row2"><input type="checkbox" id="captureSettingHardRefresh" /> Full refresh (↻ / <strong>R</strong>): reload pools, channels, forum topics, and embedded panels (Collected / Tools / this Options page), then rescan the tab — same as closing and reopening the side panel</label>
+    <label class="row2"><input type="checkbox" id="captureSettingResourceTiming" /> More resource-timing images (non–OnlyFans)</label>
+    <label class="row2"><input type="checkbox" id="captureSettingPageMediaMenu" /> In-page TBCC media right-click menu (auto on hostile sites like RedGIF; elsewhere <strong>Ctrl + Right-click</strong> or <strong>Alt + Right-click</strong>)</label>
+    <p class="desc" style="margin:4px 0 0 24px;font-size:12px;color:var(--tbcc-text-muted)">On videos: <strong>Extract frame (save)</strong> and <strong>Extract frame → reverse search</strong> grab the current still (canvas, then visible-tab crop if the player blocks it). Stills convert via Image conversion below. Reverse opens the crop/copy paste flow when there is no public image URL.</p>
+    <label class="row2">Lazy-load delay before scan (ms, 0–3000)
+      <input type="number" id="captureSettingLazyDelay" min="0" max="3000" value="0" style="width:72px" />
+    </label>
+    <h2 style="margin:12px 0 8px">Notifications</h2>
+    <p class="sub" style="margin:0 0 8px">Toast always shows in the side panel; enable system notifications for desktop-level completion alerts.</p>
+    <label class="row2"><input type="checkbox" id="captureSettingNotifySystem" /> Enable system notifications (desktop)</label>
+    <label class="row2"><input type="checkbox" id="captureSettingNotifyZip" /> Notify when ZIP bundle finishes</label>
+    <label class="row2"><input type="checkbox" id="captureSettingZipPromo" checked /> Include global ZIP promo files (readme + image from dashboard)</label>
+    <label class="row2"><input type="checkbox" id="captureSettingNotifySendTbcc" /> Notify when Send to TBCC finishes</label>
+    <label class="row2"><input type="checkbox" id="captureSettingNotifySendSaved" /> Notify when Send to Saved Messages finishes</label>
+    <label class="row2"><input type="checkbox" id="captureSettingNotifySendChannel" /> Notify when channel/group/forum post finishes</label>
+    <label class="row2">System notification style
+      <select id="captureSettingNotificationStyle" title="How desktop notifications appear">
+        <option value="full">Title + message</option>
+        <option value="app_name_only">App name + message</option>
+        <option value="body_only">Message only</option>
+        <option value="minimal">Short message</option>
+      </select>
+    </label>
+    <label class="row2">Gallery download mode
+      <select id="captureSettingDownloadMode" title="Buffered = fetch with TBCC progress then save; Direct = browser stream">
+        <option value="buffered">Buffered (progress bar, then save)</option>
+        <option value="direct">Direct (browser stream)</option>
+      </select>
+    </label>
+    <fieldset style="margin-top:14px;border:1px solid var(--tbcc-border,#45475a);border-radius:8px;padding:12px">
+      <legend style="font-size:13px;padding:0 6px">Promo watermark</legend>
+      <label class="row2"><input type="checkbox" id="captureSettingPromoWatermarkEnabled" checked />
+        Apply promo watermark on download, ZIP, and Save AOF exports
+      </label>
+      <div class="row2" style="display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px">
+        <label style="display:flex;flex-direction:column;gap:4px">
+          <span>Primary text</span>
+          <input type="text" id="captureSettingWmText" class="tbcc-input" spellcheck="false" placeholder="telegram.me/aofmainhub" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:4px">
+          <span>Secondary text</span>
+          <input type="text" id="captureSettingWmText2" class="tbcc-input" spellcheck="false" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:4px">
+          <span>Tertiary text</span>
+          <input type="text" id="captureSettingWmText3" class="tbcc-input" spellcheck="false" />
+        </label>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:10px">
+        <label class="row2" style="flex-direction:column;align-items:stretch;gap:6px">
+          <span>Opacity <span id="captureSettingWmOpacityVal">0.58</span></span>
+          <input type="range" id="captureSettingWmOpacity" min="0.15" max="1" step="0.01" value="0.58" />
+        </label>
+        <label class="row2" style="flex-direction:column;align-items:stretch;gap:6px">
+          <span>Text size (% of image)</span>
+          <input type="number" id="captureSettingWmSizeRatio" min="1.2" max="8" step="0.1" value="4.5" title="Percent of shorter edge — default 4.5%" />
+        </label>
+        <label class="row2" style="flex-direction:column;align-items:stretch;gap:6px">
+          <span>Color</span>
+          <span style="display:flex;align-items:center;gap:8px">
+            <input type="color" id="captureSettingWmColor" value="#ffffff" style="width:40px;height:28px;padding:0;border:none" />
+            <input type="text" id="captureSettingWmColorHex" class="tbcc-input" value="#ffffff" style="flex:1" spellcheck="false" />
+          </span>
+        </label>
+        <label class="row2" style="flex-direction:column;align-items:stretch;gap:6px">
+          <span>Position</span>
+          <select id="captureSettingWmPosition">
+            <option value="bottom_right">Bottom right</option>
+            <option value="bottom_left">Bottom left</option>
+            <option value="upper_right">Upper right</option>
+            <option value="upper_left">Upper left</option>
+            <option value="center_diagonal">Center diagonal</option>
+          </select>
+        </label>
+        <label class="row2" style="flex-direction:column;align-items:stretch;gap:6px">
+          <span>Placement mode</span>
+          <select id="captureSettingWmMode">
+            <option value="rotate">Rotate corners (multi-line)</option>
+            <option value="fixed">Fixed anchor</option>
+          </select>
+        </label>
+      </div>
+      <label class="row2" style="margin-top:8px"><input type="checkbox" id="captureSettingWmStripPrevious" />
+        Blur edge bands before watermark (re-burn over old promo text)
+      </label>
+      <p class="desc" style="margin:8px 0 0;font-size:12px;color:var(--tbcc-text-muted)">Videos use TBCC backend ffmpeg when API is up. Images fall back to local canvas if API is offline.</p>
+    </fieldset>
+    <fieldset style="margin-top:14px;border:1px solid var(--tbcc-border,#45475a);border-radius:8px;padding:12px">
+      <legend style="font-size:13px;padding:0 6px">Export naming</legend>
+      <label class="row2"><input type="checkbox" id="captureSettingZipHeuristic" checked />
+        Subject-aware names (model, gallery, site) — applies to downloads and ZIPs
+      </label>
+      <label class="row2" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px">
+        <span>ZIP bundle filename template</span>
+        <input type="text" id="captureSettingZipBundleTemplate" class="tbcc-input" spellcheck="false"
+          placeholder="TBCC Bundle · {name} · {site} · telegram.me_aofmainhub · allmylinks.comaof69"
+          title="Outer .zip name. Tokens: {name} {site} {gallery} {title} {date}" />
+        <span class="desc">Example: <code>TBCC Bundle · jessica · onlyfans · telegram.me_aofmainhub · allmylinks.comaof69.zip</code></span>
+      </label>
+      <label class="row2" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px">
+        <span>Export filename template (single files + ZIP entries)</span>
+        <input type="text" id="captureSettingZipEntryTemplate" class="tbcc-input" spellcheck="false"
+          placeholder="AOF_{name}_{index:5}_telegram.me_aofmainhub"
+          title="Per-file names for gallery downloads and inside ZIPs. {name} = model/gallery, {index:5}, {ext}. X overlay harvest can override when set there." />
+        <span class="desc">OnlyFans → creator handle; Erome/Motherless → gallery id; Fapello → model slug; X → @handle. Leave blank for default.</span>
+      </label>
+    </fieldset>
+    <p style="margin:12px 0 6px;font-size:12px;color:var(--tbcc-text-muted)">Edges / watermarks: use <strong>Crop &amp; watermarks</strong> in the gallery overflow menu (percent trims all four sides).</p>
+    <button type="button" id="captureSettingClearCache" class="tbcc-btn-secondary">Clear gallery cache</button>
+    <p id="tbccApiStatus" style="margin:14px 0 0;font-size:12px;color:var(--tbcc-text-muted)">Checking API…</p>
+  </section>
+
+  <section id="x-profile-looms" class="card">
+    <h1>X profile overlay</h1>
+    <p class="sub" style="margin:0 0 10px">
+      Concurrency for the on-page X profile grid and ZIP handoff. Idle/browse 1–4 · download 1–12 · timeout 2–60s.
+    </p>
+    <div class="tbcc-looms-hw">
+      <div class="tbcc-looms-hw__group">
+        <div class="tbcc-looms-hw__title">Threads</div>
+        <div class="tbcc-looms-hw__row">
+          <label class="tbcc-looms-stepper tbcc-looms-cell">
+            <span class="tbcc-looms-cell__label">Idle</span>
+            <span class="tbcc-looms-cell__ctrl">
+              <button type="button" class="tbcc-hw-step" data-step="-1" title="Decrease">−</button>
+              <input type="number" id="loomsIdleThreads" min="1" max="4" value="2" title="Thumbnail grid preload" />
+              <button type="button" class="tbcc-hw-step" data-step="1" title="Increase">+</button>
+            </span>
+            <span class="tbcc-looms-cell__hint">grid preload</span>
+          </label>
+          <label class="tbcc-looms-stepper tbcc-looms-cell">
+            <span class="tbcc-looms-cell__label">Browse</span>
+            <span class="tbcc-looms-cell__ctrl">
+              <button type="button" class="tbcc-hw-step" data-step="-1">−</button>
+              <input type="number" id="loomsBrowseThreads" min="1" max="4" value="4" title="Ahead-of-view burst" />
+              <button type="button" class="tbcc-hw-step" data-step="1">+</button>
+            </span>
+            <span class="tbcc-looms-cell__hint">scroll burst</span>
+          </label>
+          <label class="tbcc-looms-stepper tbcc-looms-cell">
+            <span class="tbcc-looms-cell__label">Download</span>
+            <span class="tbcc-looms-cell__ctrl">
+              <button type="button" class="tbcc-hw-step" data-step="-1">−</button>
+              <input type="number" id="loomsDownloadThreads" min="1" max="12" value="8" title="ZIP fetch parallelism" />
+              <button type="button" class="tbcc-hw-step" data-step="1">+</button>
+            </span>
+            <span class="tbcc-looms-cell__hint">ZIP fetches</span>
+          </label>
+          <label class="tbcc-looms-stepper tbcc-looms-cell">
+            <span class="tbcc-looms-cell__label">Timeout</span>
+            <span class="tbcc-looms-cell__ctrl">
+              <button type="button" class="tbcc-hw-step" data-step="-1">−</button>
+              <input type="number" id="loomsTimeoutSec" min="2" max="60" value="20" title="Stall timeout (seconds)" />
+              <button type="button" class="tbcc-hw-step" data-step="1">+</button>
+            </span>
+            <span class="tbcc-looms-cell__hint">seconds / fetch</span>
+          </label>
+        </div>
+      </div>
+      <div class="tbcc-looms-hw__group">
+        <div class="tbcc-looms-hw__title">Harvest</div>
+        <div class="tbcc-looms-hw__flags">
+          <label class="tbcc-looms-flag">Max items
+            <input type="number" id="loomsMaxItems" min="20" max="300" value="120" />
+          </label>
+          <label class="tbcc-looms-flag"><input type="checkbox" id="loomsIncludeVideo" checked /> Include video</label>
+          <label class="tbcc-looms-flag"><input type="checkbox" id="loomsFetchOriginal" /> Original stills</label>
+          <label class="tbcc-looms-flag"><input type="checkbox" id="loomsZipSkipWatermark" checked /> Skip ZIP watermark</label>
+        </div>
+        <label class="tbcc-looms-template">
+          <span>ZIP name template</span>
+          <input type="text" id="loomsZipNameTemplate" class="tbcc-input" spellcheck="false"
+            placeholder="{name}_{index:5}"
+            title="{name} = profile, {index:5} = padded counter, {ext} = type" />
+        </label>
+      </div>
+    </div>
+    <p class="tbcc-looms-actions">
+      <button type="button" id="loomsResetDefaults" class="tbcc-btn-secondary">Reset defaults</button>
+      <span id="loomsSettingsStatus" class="sub"></span>
+    </p>
+  </section>
+
+  <section id="plugins" class="card">
+    <h1>Plugins</h1>
+    <p class="sub" style="margin:0 0 10px">
+      Extension-only packages from aofmainhub / Sleazy Fork drops. Upload a <code>plugin.json</code> + <code>main.js</code> pair,
+      or a single <code>.user.js</code> (ported). Nothing is fetched remotely. Enable a plugin, then reload matching tabs.
+      Site tools shows core toggles plus installed plugins.
+    </p>
+    <p class="sub" style="margin:0 0 10px;font-size:11px;font-family:var(--tbcc-font-mono,Consolas,monospace)">
+      plugin.json → { id, name, version, matches[], runAt, world, gmShim, main }
+    </p>
+    <div class="tbcc-userscript-upload">
+      <input type="file" id="tbccPluginFiles" accept=".js,.user.js,.json,text/javascript,application/json" multiple hidden />
+      <button type="button" id="btnInstallPlugin" class="tbcc-btn-primary">Install plugin…</button>
+      <button type="button" id="btnClearPlugins" class="tbcc-btn-secondary">Clear all</button>
+    </div>
+    <div id="tbccPluginList" class="tbcc-userscript-list sub"></div>
+    <p id="tbccPluginStatus" class="sub" style="margin:8px 0 0;min-height:1.2em"></p>
+  </section>
+
+
+  <section id="local-stack" class="card">
+    <h1>API connection</h1>
+    <p class="sub">API base for gallery import and archive sync. Leave blank to try localhost.</p>
+    <fieldset>
+      <legend>Connection</legend>
+      <p class="sub" style="margin:0 0 10px; font-size:12px">
+        Leave base blank to probe localhost. When internal API auth is on, paste the same key below.
+      </p>
+      <label class="row" style="flex-wrap:wrap">
+        <span style="min-width:140px">API base URL</span>
+        <input
+          type="url"
+          id="tbccApiBase"
+          class="tbcc-input"
+          autocomplete="off"
+          placeholder="http://127.0.0.1:8000"
+          style="min-width:260px"
+        />
+      </label>
+      <label class="row" style="flex-wrap:wrap">
+        <span style="min-width:140px">TBCC internal key</span>
+        <input
+          type="password"
+          id="tbccInternalApiKey"
+          class="tbcc-input"
+          autocomplete="off"
+          placeholder="(optional)"
+        />
+      </label>
+      <p id="tbccApiBaseStatus" class="sub" style="margin:8px 0 0">Checking API…</p>
+    </fieldset>
+  </section>
+
+  <section id="model" class="card tbcc-options-section">
+    <h1>Model search</h1>
+    <p class="sub">
+      Use the sidebar <strong>Lookup</strong> tab for <strong>macro search</strong> (background scan + hits-only report). Right-click a username → <strong>TBCC — Look up username</strong> for tab fan-out (OnlyFans / live cam / video) or <strong>Macro search</strong>.
+      Add sources below; pick <strong>Macro search</strong> for the native engine, or OnlyFans / live cam / video for opening tabs. URL must include <code>{username}</code>.
+    </p>
+
+    <h2>Open results as</h2>
+    <fieldset class="modes">
+      <legend>Layout</legend>
+      <label>
+        <input type="radio" name="openMode" value="foreground" />
+        New tabs (first tab focused)
+        <span class="desc">Opens one tab per source; first tab is active.</span>
+      </label>
+      <label>
+        <input type="radio" name="openMode" value="background" />
+        Background tabs
+        <span class="desc">Opens all sources in new tabs without switching away from the current page.</span>
+      </label>
+    </fieldset>
+
+    <h2 id="tbcc-add-source">Add a source</h2>
+    <fieldset id="tbcc-add-source-fieldset">
+      <legend>Custom search URL</legend>
+      <p class="sub" style="margin:0 0 10px">
+        Paste the URL from the address bar <strong>after</strong> you run a manual search on that site (so you get the real query format). Put <code>{username}</code> where the search term goes — often
+        <code>?q={username}</code> or <code>&amp;query={username}</code>, not a guessed path like <code>/artists/name</code> (many sites 404 on those).
+      </p>
+      <label class="row" style="flex-wrap:wrap">
+        <span style="min-width:120px">Display name</span>
+        <input type="text" id="customSiteName" class="tbcc-input" placeholder="e.g. Model searcher" style="min-width:200px" />
+      </label>
+      <label class="row" style="flex-wrap:wrap;margin-top:8px">
+        <span style="min-width:120px">Search URL</span>
+        <input type="text" id="customSiteUrl" class="tbcc-input" placeholder="https://…?q={username}" style="min-width:240px" />
+      </label>
+      <label class="row" style="flex-wrap:wrap;margin-top:8px">
+        <span style="min-width:120px">Category</span>
+        <select id="customSiteCat" class="tbcc-input" style="min-width:180px;max-width:260px">
+          <option value="macro">Macro search (native engine)</option>
+          <option value="onlyfans">OnlyFans search</option>
+          <option value="livecams">Live cam search</option>
+          <option value="videos">Video search</option>
+        </select>
+      </label>
+      <button type="button" id="btnAddCustomSite" class="tbcc-btn-primary">Add source</button>
+    </fieldset>
+
+
+    <h2 id="saved-videos">URL inbox (quick view)</h2>
+    <p class="sub" style="margin:0 0 10px">
+      Context menu: <strong>TBCC: Add URL to inbox</strong> or <strong>Save all video URLs to inbox</strong> (Bunkr-style page scan).
+      Manage pools and import in <strong>Gallery → Inbox</strong>.
+      New links use your gallery default content pool.
+    </p>
+    <div id="savedVideoUrlsList" class="sub" style="max-height:240px;overflow:auto;border:1px solid var(--tbcc-border,#313244);border-radius:8px;padding:8px 10px;"></div>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <input type="url" id="savedVideoManualUrl" class="tbcc-input" placeholder="https://…" style="min-width:200px;flex:1;max-width:420px" />
+      <button type="button" id="btnSavedVideoAddManual" class="tbcc-btn-primary">Add URL</button>
+      <button type="button" id="btnSavedVideoCopyAll" class="tbcc-btn-secondary">Copy all</button>
+      <button type="button" id="btnSavedVideoClear" class="tbcc-btn-secondary">Clear list</button>
+    </div>
+
+    <h2>Sources</h2>
+    <p class="sub" style="margin:0 0 10px">Toggle sources on or off. Only enabled sources appear in the context menu.</p>
+    <div id="siteFields"></div>
+
+    <h2>Username search history</h2>
+    <p class="sub" style="margin:0 0 10px">
+      Recent usernames searched by TBCC. Click a username to copy it. Site badge shows where the search was started
+      (Stripchat, Chaturbate, OnlyFans, Instagram, X, …). Remove asks for confirmation.
+    </p>
+    <div id="modelSearchHistory" class="sub" style="max-height:180px;overflow:auto;border:1px solid var(--tbcc-border,#313244);border-radius:8px;padding:8px 10px;"></div>
+    <div style="margin-top:8px">
+      <button type="button" id="btnClearModelSearchHistory" class="tbcc-btn-secondary">Clear username history</button>
+    </div>
+
+    <h2 id="master-archive">Master archive</h2>
+    <p class="sub" style="margin:0 0 10px">
+      Permanent list of every URL and username captured by TBCC (inbox, copy, model search). Not cleared when you clear the inbox queue.
+      Also open from <strong>Gallery → Inbox → Master archive</strong>. Export JSON/CSV for off-browser backup.
+    </p>
+    <div style="margin:0 0 10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <input type="search" id="masterArchiveFilterOpts" class="tbcc-input" placeholder="Filter…" style="min-width:160px;flex:1;max-width:320px" />
+      <select id="masterArchiveKindOpts" class="tbcc-input" style="max-width:140px">
+        <option value="">All</option>
+        <option value="url">URLs</option>
+        <option value="username">Usernames</option>
+      </select>
+    </div>
+    <div class="master-archive-sort-row" style="margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+      <span class="master-archive-sort-label" style="font-size:11px;color:var(--tbcc-text-muted,#a6adc8)">Sort</span>
+      <select id="masterArchiveSort1Opts" class="tbcc-input" style="max-width:130px">
+        <option value="addedAt">Date added</option>
+        <option value="value">URL / username</option>
+        <option value="host">Site (host)</option>
+        <option value="source">Source</option>
+        <option value="kind">Type</option>
+        <option value="summary">Title</option>
+      </select>
+      <select id="masterArchiveSort1DirOpts" class="tbcc-input" style="max-width:120px">
+        <option value="desc">Newest / Z-A</option>
+        <option value="asc">Oldest / A-Z</option>
+      </select>
+      <span class="master-archive-sort-label" style="font-size:11px;color:var(--tbcc-text-muted,#a6adc8)">then</span>
+      <select id="masterArchiveSort2Opts" class="tbcc-input" style="max-width:130px">
+        <option value="">—</option>
+        <option value="addedAt">Date added</option>
+        <option value="value">URL / username</option>
+        <option value="host">Site (host)</option>
+        <option value="source">Source</option>
+        <option value="kind">Type</option>
+        <option value="summary">Title</option>
+      </select>
+      <select id="masterArchiveSort2DirOpts" class="tbcc-input" style="max-width:120px">
+        <option value="asc">A-Z / oldest</option>
+        <option value="desc">Z-A / newest</option>
+      </select>
+    </div>
+    <div style="margin:0 0 10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <button type="button" id="btnMasterOptsSelectAll" class="tbcc-btn-secondary">Select all</button>
+      <button type="button" id="btnMasterOptsDeselectAll" class="tbcc-btn-secondary">Deselect all</button>
+      <button type="button" id="btnMasterOptsCopyUrls" class="tbcc-btn-secondary">Copy URLs</button>
+      <button type="button" id="btnMasterOptsExportAll" class="tbcc-btn-primary">Export all + wipe…</button>
+      <button type="button" id="btnMasterOptsExportJson" class="tbcc-btn-secondary">Export JSON</button>
+      <button type="button" id="btnMasterOptsExportCsv" class="tbcc-btn-secondary">Export CSV</button>
+      <button type="button" id="btnMasterOptsImport" class="tbcc-btn-secondary">Import…</button>
+      <button type="button" id="btnMasterOptsWipe" class="tbcc-btn-secondary" style="border:1px solid var(--tbcc-error,#fb7185);color:var(--tbcc-error,#fb7185)">Wipe archive</button>
+      <a href="http://127.0.0.1:5173/archive" target="_blank" rel="noopener" class="tbcc-btn-secondary" style="display:inline-flex;align-items:center;text-decoration:none">Dashboard archive</a>
+    </div>
+    <input type="file" id="masterArchiveImportFileOpts" accept=".json,.csv,.txt,text/plain,application/json" hidden />
+    <div id="masterArchivePagerOpts" class="tbcc-archive-pager" hidden></div>
+    <div id="masterArchiveListOpts" class="sub master-archive-list" style="max-height:280px;overflow:auto;border:1px solid var(--tbcc-border,#313244);border-radius:8px;padding:8px 10px;"></div>
+    <p id="masterArchiveStatusOpts" class="sub" style="margin:8px 0 0;min-height:1.2em"></p>
+
+    <p id="status"></p>
+    <p class="footer">
+      Default list: <code>extension/model-search-sites.json</code>. Extra sources are stored in this browser. Reload the extension after editing the JSON file.
+    </p>
+  </section>
+
+  <section id="reverse" class="card tbcc-options-section tbcc-options-split">
+    <h1>Reverse image search</h1>
+    <p class="sub">
+      Right-click an <strong>image</strong> → <strong>Reverse image search (fan-out)</strong>. Engines take a
+      <strong>public</strong> image URL (http/https). On <strong>videos</strong> (hostile menu or Chrome video menu): extract the current frame first, then open the crop/copy paste flow. Edit <code>extension/reverse-image-sites.json</code> to add engines.
+    </p>
+
+    <h2>Open results as</h2>
+    <fieldset class="modes">
+      <legend>Layout</legend>
+      <label>
+        <input type="radio" name="openModeReverse" value="foreground" />
+        New tabs (first focused)
+        <span class="desc">One tab per engine.</span>
+      </label>
+      <label>
+        <input type="radio" name="openModeReverse" value="background" />
+        Background tabs
+        <span class="desc">All engines open in background tabs.</span>
+      </label>
+    </fieldset>
+
+    <h2>Engines</h2>
+    <div id="reverseSiteFields"></div>
+    <p class="footer">
+      After editing <code>reverse-image-sites.json</code>, reload the extension on <code>chrome://extensions</code>.
+    </p>
+  </section>
+
+  <script src="tbcc-clipboard-toast.js"></script>
+  <script src="tbcc-api-client.js"></script>
+  <script src="tbcc-master-archive.js"></script>
+  <script src="tbcc-archive-list-ui.js"></script>
+  <script src="tbcc-plugin-runtime.js"></script>
+  <script src="x-profile-looms-shared.js"></script>
+  <script src="x-profile-looms-options.js"></script>
+  <script src="tbcc-promo-watermark.js"></script>
+  <script src="gallery-capture-options.js"></script>
+  <script src="model-search-shared.js"></script>
+  <script src="username-search-history-shared.js"></script>
+  <script src="model-search-options.js"></script>
+</body>
+</html>

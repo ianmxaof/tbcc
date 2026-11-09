@@ -1,0 +1,627 @@
+/* Shared TBCC extension UI — options pages, embeds; uses tokens.css */
+* {
+  box-sizing: border-box;
+}
+
+body.tbcc-options-page {
+  margin: 0;
+  padding: 20px 24px 40px;
+  max-width: 720px;
+  font-family: var(--tbcc-font-ui, Inter, "DM Sans", Roboto, system-ui, sans-serif);
+  font-size: 13px;
+  background: var(--tbcc-bg-base);
+  color: var(--tbcc-text-primary);
+  line-height: 1.4;
+}
+
+body.tbcc-options-page h1 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--tbcc-text-heading);
+}
+
+body.tbcc-options-page .sub {
+  margin: 0 0 20px;
+  font-size: 12px;
+  color: var(--tbcc-text-muted);
+}
+
+.tbcc-archive-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 11px;
+  color: var(--tbcc-text-secondary);
+}
+.tbcc-archive-pager__label {
+  min-width: 140px;
+  text-align: center;
+}
+.master-archive-list .saved-url-inbox-row {
+  border-bottom: 1px solid var(--tbcc-border, #313244);
+  padding: 8px 4px;
+}
+.master-archive-list .saved-url-inbox-url {
+  color: var(--tbcc-accent-hover, #b4befe);
+}
+
+body.tbcc-options-page h2 {
+  margin: 22px 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tbcc-text-section);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+body.tbcc-options-page fieldset {
+  border: 1px solid var(--tbcc-bg-elevated);
+  border-radius: var(--tbcc-radius);
+  padding: 12px 14px;
+  margin: 0 0 12px;
+  background: var(--tbcc-bg-card);
+}
+
+body.tbcc-options-page legend {
+  padding: 0 6px;
+  font-size: 12px;
+  color: var(--tbcc-text-secondary);
+}
+
+body.tbcc-options-page label.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+body.tbcc-options-page label.row input {
+  margin: 0;
+}
+
+body.tbcc-options-page .cat {
+  font-size: var(--tbcc-font-caption);
+  color: var(--tbcc-text-muted);
+  margin-left: auto;
+  text-transform: lowercase;
+}
+
+body.tbcc-options-page .modes label {
+  display: block;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+body.tbcc-options-page .modes input {
+  margin-right: 8px;
+}
+
+body.tbcc-options-page .modes .desc {
+  display: block;
+  margin-left: 22px;
+  font-size: var(--tbcc-font-caption);
+  color: var(--tbcc-text-muted);
+}
+
+body.tbcc-options-page .footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--tbcc-text-muted);
+}
+
+body.tbcc-options-page .footer code {
+  background: var(--tbcc-bg-surface);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+body.tbcc-options-page #status {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--tbcc-success);
+  min-height: 1.2em;
+}
+
+body.tbcc-options-page .err {
+  color: var(--tbcc-error);
+}
+
+body.tbcc-options-page nav.top {
+  padding: 8px 0 4px;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+body.tbcc-options-page nav.top a {
+  color: var(--tbcc-accent);
+  text-decoration: none;
+}
+
+body.tbcc-options-page nav.top a:hover {
+  text-decoration: underline;
+}
+
+body.tbcc-options-page nav.top span.sep {
+  color: var(--tbcc-bg-elevated);
+  margin: 0 6px;
+}
+
+body.tbcc-options-page .card {
+  border: 1px solid var(--tbcc-bg-elevated);
+  border-radius: var(--tbcc-radius);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  background: var(--tbcc-bg-card);
+}
+
+body.tbcc-options-page .card h1 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--tbcc-text-heading);
+}
+
+body.tbcc-options-page .card label.row2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+body.tbcc-options-page .card select,
+body.tbcc-options-page .card input[type="number"] {
+  min-height: 32px;
+  padding: 4px 8px;
+  border-radius: var(--tbcc-radius-sm);
+  border: 1px solid var(--tbcc-bg-elevated);
+  background: var(--tbcc-bg-surface);
+  color: var(--tbcc-text-primary);
+  font-size: 13px;
+}
+
+body.tbcc-options-page .tbcc-options-split {
+  margin-top: 8px;
+}
+
+html.tbcc-options-embed body.tbcc-options-page {
+  max-width: none;
+  padding: 12px 14px 28px;
+}
+
+html.tbcc-options-embed body.tbcc-options-page .tbcc-options-split {
+  margin-top: 4px;
+}
+
+body.tbcc-options-page .tbcc-input {
+  flex: 1;
+  min-width: 160px;
+  padding: 6px 8px;
+  background: var(--tbcc-bg-surface);
+  color: var(--tbcc-text-primary);
+  border: 1px solid var(--tbcc-bg-elevated);
+  border-radius: var(--tbcc-radius-sm);
+  font-size: 13px;
+}
+
+body.tbcc-options-page .tbcc-btn-primary {
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--tbcc-accent);
+  border-radius: var(--tbcc-radius-sm);
+  background: color-mix(in srgb, var(--tbcc-accent) 18%, var(--tbcc-bg-card));
+  color: var(--tbcc-accent);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+body.tbcc-options-page .tbcc-btn-secondary {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--tbcc-border, #3d3d46);
+  border-radius: var(--tbcc-radius-sm);
+  background: var(--tbcc-bg-elevated);
+  color: var(--tbcc-text-primary);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Compact “details” rows (model search sources, adapter lab) */
+body.tbcc-options-page .tbcc-details-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--tbcc-bg-elevated, #313244);
+  font-size: 13px;
+}
+
+body.tbcc-options-page .tbcc-details-row:last-child {
+  border-bottom: none;
+}
+
+body.tbcc-options-page .tbcc-details-row > input[type="checkbox"] {
+  margin: 2px 0 0;
+  flex-shrink: 0;
+}
+
+body.tbcc-options-page .tbcc-details-row-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+body.tbcc-options-page .tbcc-details-main {
+  flex: 1;
+  min-width: 0;
+}
+
+body.tbcc-options-page .tbcc-details-title {
+  font-weight: 500;
+  color: var(--tbcc-text-primary);
+  line-height: 1.3;
+}
+
+body.tbcc-options-page .tbcc-details-sub {
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--tbcc-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.tbcc-options-page .tbcc-details-id.cat {
+  margin-left: 0;
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding-top: 2px;
+  max-width: 38%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.tbcc-options-page .tbcc-details-actions {
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+body.tbcc-options-page button.tbcc-details-remove {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: var(--tbcc-error, #f38ba8);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+body.tbcc-options-page button.tbcc-details-remove:hover {
+  color: var(--tbcc-text-primary);
+}
+
+/* Model search: no horizontal scroll in narrow side panel */
+body.tbcc-options-page #siteFields {
+  overflow-x: hidden;
+  max-width: 100%;
+  min-width: 0;
+}
+
+body.tbcc-options-page #siteFields fieldset {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body.tbcc-options-page .tbcc-source-row .tbcc-details-row-body {
+  min-width: 0;
+}
+
+body.tbcc-options-page .tbcc-source-row .tbcc-details-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.tbcc-options-page .tbcc-details-id.cat {
+  max-width: min(120px, 32%);
+}
+
+body.tbcc-options-page #modelSearchHistory {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body.tbcc-options-page .tbcc-history-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--tbcc-bg-elevated, #313244);
+  min-width: 0;
+}
+
+body.tbcc-options-page .tbcc-history-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+body.tbcc-options-page .tbcc-history-main code {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+body.tbcc-options-page .tbcc-history-main code.tbcc-history-username {
+  cursor: pointer;
+  color: var(--tbcc-accent, #89b4fa);
+}
+
+body.tbcc-options-page .tbcc-history-main code.tbcc-history-username:hover {
+  text-decoration: underline;
+}
+
+body.tbcc-options-page .tbcc-history-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  max-width: 55%;
+}
+
+body.tbcc-options-page .tbcc-history-time {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.tbcc-options-page .tbcc-ush-source,
+.tbcc-ush-source {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #11111b;
+  flex-shrink: 0;
+}
+
+body.tbcc-options-page .tbcc-ush-source--stripchat { background: #e91e63; }
+body.tbcc-options-page .tbcc-ush-source--chaturbate { background: #f7931e; }
+body.tbcc-options-page .tbcc-ush-source--onlyfans { background: #00aff0; }
+body.tbcc-options-page .tbcc-ush-source--fansly { background: #1d9bf0; }
+body.tbcc-options-page .tbcc-ush-source--instagram {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
+}
+body.tbcc-options-page .tbcc-ush-source--x { background: #e7e9ea; }
+body.tbcc-options-page .tbcc-ush-source--reddit { background: #ff4500; color: #fff; }
+body.tbcc-options-page .tbcc-ush-source--erome { background: #a6e3a1; }
+body.tbcc-options-page .tbcc-ush-source--cambb { background: #cba6f7; }
+body.tbcc-options-page .tbcc-ush-source--model_search,
+body.tbcc-options-page .tbcc-ush-source--macro,
+body.tbcc-options-page .tbcc-ush-source--overlay,
+body.tbcc-options-page .tbcc-ush-source--unknown {
+  background: #6c7086;
+  color: #cdd6f4;
+}
+
+body.tbcc-options-page button.tbcc-history-remove {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0 6px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--tbcc-text-muted);
+  cursor: pointer;
+}
+
+body.tbcc-options-page button.tbcc-history-remove:hover {
+  color: var(--tbcc-error, #f38ba8);
+}
+
+html.tbcc-options-embed body.tbcc-options-page #siteFields,
+html.tbcc-options-embed body.tbcc-options-page #modelSearchHistory {
+  max-width: 100%;
+}
+
+/* X overlay — compact hardware grid (label / stepper / hint stacked) */
+.tbcc-looms-hw {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 10px;
+}
+.tbcc-looms-hw__group {
+  border: 1px solid var(--tbcc-border, #3d3d46);
+  background: var(--tbcc-bg-card);
+  border-radius: var(--tbcc-radius-sm, 2px);
+  padding: 8px 10px 10px;
+}
+.tbcc-looms-hw__title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tbcc-text-muted);
+  margin: 0 0 8px;
+}
+.tbcc-looms-hw__row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+@media (max-width: 640px) {
+  .tbcc-looms-hw__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+label.tbcc-looms-cell,
+.tbcc-looms-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--tbcc-border, #3d3d46);
+  border-radius: var(--tbcc-radius-sm, 2px);
+  background: var(--tbcc-bg-surface);
+  cursor: default;
+  font-size: 12px;
+}
+.tbcc-looms-cell__label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tbcc-text-primary);
+  letter-spacing: 0.02em;
+}
+.tbcc-looms-cell__hint {
+  font-size: 10px;
+  color: var(--tbcc-text-muted);
+  line-height: 1.2;
+}
+.tbcc-looms-cell__ctrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tbcc-looms-cell__ctrl input[type="number"] {
+  width: 44px;
+  min-height: 26px;
+  margin: 0;
+  padding: 2px 4px;
+  text-align: center;
+  font-family: var(--tbcc-font-mono, Consolas, monospace);
+  font-size: 12px;
+  border: 1px solid var(--tbcc-border, #3d3d46);
+  border-radius: var(--tbcc-radius-sm, 2px);
+  background: var(--tbcc-bg-base);
+  color: var(--tbcc-text-primary);
+}
+button.tbcc-hw-step {
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--tbcc-border, #3d3d46);
+  border-radius: var(--tbcc-radius-sm, 2px);
+  background: var(--tbcc-bg-elevated);
+  color: var(--tbcc-text-primary);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+button.tbcc-hw-step:hover {
+  border-color: var(--tbcc-accent);
+  color: var(--tbcc-accent);
+}
+.tbcc-looms-hw__flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+label.tbcc-looms-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--tbcc-text-secondary);
+  cursor: pointer;
+}
+label.tbcc-looms-flag input[type="number"] {
+  width: 56px;
+  min-height: 26px;
+  margin: 0;
+  padding: 2px 6px;
+  font-family: var(--tbcc-font-mono, Consolas, monospace);
+  font-size: 12px;
+  border: 1px solid var(--tbcc-border, #3d3d46);
+  border-radius: var(--tbcc-radius-sm, 2px);
+  background: var(--tbcc-bg-base);
+  color: var(--tbcc-text-primary);
+}
+label.tbcc-looms-template {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  font-size: 11px;
+  color: var(--tbcc-text-muted);
+}
+.tbcc-looms-actions {
+  margin: 8px 0 0;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.tbcc-looms-actions .sub {
+  margin: 0;
+  font-size: 11px;
+}
+.tbcc-userscript-upload {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.tbcc-userscript-list {
+  margin: 0;
+  max-height: 200px;
+  overflow: auto;
+  border: 1px solid var(--tbcc-border, #3d3d46);
+  border-radius: var(--tbcc-radius-sm, 2px);
+  padding: 8px 10px;
+  font-family: var(--tbcc-font-mono, Consolas, monospace);
+  font-size: 11px;
+}
+.tbcc-userscript-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--tbcc-border, #3d3d46);
+}
+.tbcc-userscript-row:last-child {
+  border-bottom: none;
+}
+.tbcc-userscript-row .name {
+  flex: 1;
+  color: var(--tbcc-text-primary);
+}
+.tbcc-userscript-row .meta {
+  color: var(--tbcc-text-muted);
+}
