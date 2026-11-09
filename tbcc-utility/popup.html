@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TBCC</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <style>
+    body {
+      width: 300px;
+      padding: 14px;
+      font-family: system-ui, sans-serif;
+      font-size: 13px;
+      background: var(--tbcc-bg-base);
+      color: var(--tbcc-text-primary);
+      margin: 0;
+    }
+    body.tbcc-in-panel {
+      width: 100%;
+      max-width: none;
+      min-height: 100%;
+      box-sizing: border-box;
+      padding: 16px 18px 20px;
+    }
+    .kit-brand {
+      margin: 0 0 14px;
+      font-size: 15px;
+      color: var(--tbcc-text-heading);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .kit-section {
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--tbcc-bg-elevated);
+    }
+    .kit-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .kit-section-title {
+      margin: 0 0 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--tbcc-text-muted);
+    }
+    label.field-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--tbcc-text-secondary);
+      font-size: 12px;
+    }
+    select {
+      width: 100%;
+      min-height: 36px;
+      padding: 6px 8px;
+      margin-bottom: 0;
+      border-radius: 6px;
+      border: 1px solid var(--tbcc-bg-elevated);
+      background: var(--tbcc-bg-surface);
+      color: var(--tbcc-text-primary);
+      font-size: 13px;
+    }
+    .lite-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--tbcc-text-secondary);
+      cursor: pointer;
+      line-height: 1.4;
+    }
+    .lite-row input { margin: 2px 0 0; flex-shrink: 0; }
+    .kit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .kit-grid .btn-full { grid-column: 1 / -1; }
+    .btn {
+      min-height: 36px;
+      padding: 0 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-primary {
+      background: var(--tbcc-accent);
+      color: #1e1e2e;
+    }
+    .btn-primary:hover { background: var(--tbcc-accent-hover); }
+    .btn-secondary {
+      background: var(--tbcc-bg-elevated);
+      color: var(--tbcc-text-primary);
+    }
+    .btn-secondary:hover { background: #585b70; }
+    .btn-green {
+      background: #166534;
+      color: #dcfce7;
+    }
+    .btn-green:hover { filter: brightness(1.06); }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--tbcc-bg-elevated);
+      color: var(--tbcc-text-secondary);
+    }
+    .btn-ghost:hover { border-color: var(--tbcc-accent); color: var(--tbcc-text-primary); }
+    #captureStatus { margin-top: 6px; font-size: 11px; color: var(--tbcc-success); min-height: 1.2em; }
+    #captureStatus.err { color: var(--tbcc-error); }
+    .kit-hint {
+      margin: 6px 0 0;
+      font-size: 11px;
+      color: var(--tbcc-text-muted);
+      line-height: 1.35;
+    }
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--tbcc-text-muted);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #6c7086; flex-shrink: 0; }
+    .dot.ok { background: var(--tbcc-success); }
+    .dot.bad { background: var(--tbcc-error); }
+    .kit-pin-editor {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .kit-pin-chip {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--tbcc-bg-elevated);
+      background: var(--tbcc-bg-surface);
+      color: var(--tbcc-text-secondary);
+      cursor: pointer;
+    }
+    .kit-pin-chip.on {
+      border-color: var(--tbcc-accent);
+      color: var(--tbcc-accent);
+      background: rgba(137, 220, 235, 0.08);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="kit-brand">TBCC operator kit</h1>
+
+  <section class="kit-section">
+    <h2 class="kit-section-title">Favorites overlay</h2>
+    <label class="lite-row">
+      <input type="checkbox" id="tbccKitVisible" />
+      Show draggable kit on web pages (pins + quick-add prompt/snippet)
+    </label>
+    <p class="kit-hint">Also toggle from the toolbar icon menu → Operator kit. Off by default.</p>
+    <p class="kit-hint" id="tbccKitPinHint">Pinned live tools appear on the overlay. Download routing and context menu stay in Library below.</p>
+    <div class="kit-pin-editor" id="tbccKitPinEditor" aria-label="Pin tools to overlay"></div>
+  </section>
+
+  <section class="kit-section">
+    <h2 class="kit-section-title">Capture</h2>
+    <label class="field-label" for="poolId">Content pool</label>
+    <select id="poolId">
+      <option value="">Loading…</option>
+    </select>
+    <label class="lite-row" style="margin-top:10px">
+      <input type="checkbox" id="tbccLiteMode" />
+      TBCC Lite (generic capture, smaller batches)
+    </label>
+    <div class="kit-grid" style="margin-top:10px">
+      <button type="button" id="openGallery" class="btn btn-primary btn-full">Open gallery</button>
+      <button type="button" id="openGalleryPopOut" class="btn btn-secondary">Pop-out window</button>
+      <button type="button" id="btnCaptureReverse" class="btn btn-green">Reverse search</button>
+    </div>
+    <p id="captureStatus"></p>
+    <button type="button" id="btnEromeProxyKill" class="btn btn-ghost btn-full" style="margin-top:8px">Site proxy off</button>
+    <p id="eromeProxyKillStatus" class="kit-hint"></p>
+  </section>
+
+  <section class="kit-section">
+    <h2 class="kit-section-title">Library</h2>
+    <div class="kit-grid">
+      <button type="button" id="openSnippetLibrary" class="btn btn-secondary">Snippets &amp; prompts</button>
+      <button type="button" id="openDownloadRouting" class="btn btn-secondary">Download routing</button>
+      <button type="button" id="openContextMenuEditor" class="btn btn-secondary">Context menu</button>
+      <button type="button" id="openExtensionOptions" class="btn btn-secondary">Extension options</button>
+    </div>
+  </section>
+
+  <section class="kit-section">
+    <h2 class="kit-section-title">Stack</h2>
+    <p class="kit-hint" style="margin-top:0">Needs <code style="font-size:10px">tbcc-launch-daemon.ps1</code> on :8765, or API + internal key.</p>
+    <div class="kit-grid">
+      <button type="button" id="btnLaunchSupervisor" class="btn btn-secondary">Tray supervisor</button>
+      <button type="button" id="btnLaunchFullStack" class="btn btn-secondary">Full stack (cold)</button>
+    </div>
+    <div class="status-row">
+      <span id="backendDot" class="dot" title="Backend"></span>
+      <span id="backendStatus">Checking backend…</span>
+    </div>
+  </section>
+
+  <script src="tbcc-operator-kit-lib.js"></script>
+  <script src="tbcc-clipboard-toast.js"></script>
+  <script src="launch-full-stack.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
+
